@@ -22,30 +22,7 @@ app_ui_navbar <- function(request) {
           )
         ),
 
-
-        shiny::fluidRow(
-          shiny::column(
-            width = 11,
-            # shiny::br(),
-            shiny::textInput(
-              inputId = "uri",
-              label = "URI",
-              value = "/Users/aaronwolen/Dropbox (Personal)/work/tiledb/tiledb-ukbiobank-gwas/data/gwasdbv2",
-              # placeholder = "TileDB URI",
-              width = "100%"
-            )
-          ),
-          shiny::column(
-            width = 1,
-            shiny::br(),
-            shiny::actionButton(
-              inputId = "submit",
-              label = "",
-              icon = icon("check"),
-              class = "btn-primary"
-            )
-          )
-        ),
+        arraySelectorUI("gwas_array"),
 
         shiny::fluidRow(
           shiny::selectizeInput(

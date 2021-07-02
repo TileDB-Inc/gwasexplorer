@@ -6,15 +6,7 @@
 
 app_server <- function(input, output, session) {
 
-  array_object <- shiny::eventReactive(input$submit, {
-    req(input$uri)
-    log_msg("Loading array from URI")
-    tiledb::tiledb_array(
-      input$uri,
-      query_type = "READ",
-      as.data.frame = TRUE
-    )
-  })
+  tdb_array <- arraySelectorServer(id = "gwas_array")
 
   query_region <- regionSelectorServer(id = "region")
 
@@ -28,12 +20,12 @@ app_server <- function(input, output, session) {
   })
 
   tbl_results <- shiny::reactive({
-    shiny::req(array_object(), query_params())
+    shiny::req(tdb_array(), query_params())
     log_msg(
       sprintf("Querying array across %i dimensions", length(query_params()))
     )
     query <- query_params()
-    tdb <- array_object()
+    tdb <- tdb_array()
     tiledb::selected_ranges(tdb) <- query
     tdb[]
   })
