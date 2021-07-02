@@ -23,14 +23,26 @@ app_ui_navbar <- function(request) {
           )
         ),
 
-        arraySelectorUI("gwas_array"),
-
-        shiny::fluidRow(
-          shiny::selectizeInput(
-            inputId = "phenotype",
-            label = "Phenotype",
-            choices = .tbl_phenotypes$description,
-            selected = .tbl_phenotypes$description[1]
+        tabsetPanel(
+          id = "config-tabs",
+          type = "tabs",
+          tabPanel(
+            title = "Array",
+            class = "p-3",
+            arraySelectorUI("gwas_array")
+          ),
+          tabPanel(
+            title = "Query",
+            class = "p-3",
+            shiny::div(
+              shiny::selectizeInput(
+                inputId = "phenotype",
+                label = "Phenotype",
+                choices = .tbl_phenotypes$description,
+                selected = .tbl_phenotypes$description[1]
+              ),
+              regionSelectorUI(id = "region")
+            )
           )
         ),
 
@@ -38,12 +50,20 @@ app_ui_navbar <- function(request) {
           id = "main-tabs",
           type = "tabs",
           tabPanel(
-            "Schema",
-            regionSelectorUI(id = "region"),
+            title = "About",
+            class = "p-3",
+            shiny::includeMarkdown(system.file("assets/about.md", package = "gwasexplorer"))
+          ),
+          tabPanel(
+            title = "Results",
+            class = "p-3",
             DT::DTOutput("table")
+          ),
+          tabPanel(
+            title = "Plot",
+            class = "p-3",
+            shiny::plotOutput("plot")
           )
-          # tabPanel("Results", app_ui_results(), class = "p-3"),
-          # tabPanel("Snippets", app_ui_snippets(), class = "p-3")
         ),
 
       ) # div.container
