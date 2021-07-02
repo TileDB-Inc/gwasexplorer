@@ -1,5 +1,5 @@
 app_ui_navbar <- function(request) {
-  navbarPage(
+  shiny::navbarPage(
     title = "GWAS Explorer",
     windowTitle = "GWAS Explorer",
     fluid = TRUE,
@@ -7,6 +7,7 @@ app_ui_navbar <- function(request) {
     id = "tabs",
 
     shiny::tabPanel(
+      shinyjs::useShinyjs(),
       title = "HOME",
 
       div(

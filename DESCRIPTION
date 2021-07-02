@@ -20,6 +20,7 @@ Imports:
     utils,
     pkgload,
     bslib,
-    sass
+    sass,
+    shinyjs
 Depends:
     R (>= 2.10)
