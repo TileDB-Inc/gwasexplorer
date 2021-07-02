@@ -1,3 +1,6 @@
+#' GWAS Explorer UI
+#' @importFrom shinyjs extendShinyjs
+
 app_ui_navbar <- function(request) {
   shiny::navbarPage(
     title = "GWAS Explorer",
@@ -8,6 +11,10 @@ app_ui_navbar <- function(request) {
 
     shiny::tabPanel(
       shinyjs::useShinyjs(),
+      shinyjs::extendShinyjs(
+        script = "www/js/tabdisable.js",
+        functions = c("enableTab", "disableTab")
+      ),
       title = "HOME",
 
       div(

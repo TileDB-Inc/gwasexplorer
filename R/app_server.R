@@ -5,10 +5,27 @@
 #' @noRd
 
 app_server <- function(input, output, session) {
+  js$disableTab("Query")
+  js$disableTab("Results")
+  js$disableTab("Plot")
 
   tdb_array <- arraySelectorServer(id = "gwas_array")
-
   query_region <- regionSelectorServer(id = "region")
+
+  observe({
+    if (inherits(tdb_array(), "tiledb_array")) {
+      log_msg("Enabling query/results tab")
+      js$enableTab("Query")
+      js$enableTab("Results")
+      js$enableTab("Plot")
+    } else {
+      log_msg("Disabling query/results tab")
+      js$disableTab("Query")
+      js$disableTab("Results")
+      js$disableTab("Plot")
+      shiny::updateTabsetPanel(session, "main-tabs", selected = "About")
+    }
+  })
 
   query_params <- reactive({
     req(query_region)

@@ -21,6 +21,7 @@ Imports:
     pkgload,
     bslib,
     sass,
-    shinyjs
+    shinyjs,
+    ggplot2
 Depends:
     R (>= 2.10)

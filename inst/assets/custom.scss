@@ -9,3 +9,8 @@
     background-color: $primary;
   }
 }
+
+// disabled class for shiny::tabPanel
+.nav li a.disabled {
+  cursor: not-allowed !important;
+}
