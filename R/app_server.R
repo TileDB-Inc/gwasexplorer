@@ -1,4 +1,4 @@
-#' Server-side logic
+#' GWAS Explorer Server-side logic
 #'
 #' @param input,output,session Internal parameters for {shiny}
 #' @import shiny
