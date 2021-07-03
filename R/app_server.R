@@ -5,9 +5,6 @@
 #' @noRd
 
 app_server <- function(input, output, session) {
-  js$disableTab("Query")
-  js$disableTab("Results")
-  js$disableTab("Plot")
 
   tdb_array <- arraySelectorServer(id = "gwas_array")
   query_region <- regionSelectorServer(id = "region")

@@ -13,3 +13,11 @@ shinyjs.enableTab = function(name) {
   tab.unbind('click.tab');
   tab.removeClass('disabled');
 }
+
+shinyjs.init = function() {
+  console.log("Disabling query tab");
+  var tabs = ["Query", "Results", "Plot"];
+  for (var i = 0; i < tabs.length; i++) {
+    shinyjs.disableTab(tabs[i]);
+  }
+}
