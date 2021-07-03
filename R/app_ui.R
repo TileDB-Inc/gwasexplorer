@@ -1,5 +1,5 @@
 #' GWAS Explorer UI
-#' @importFrom shinyjs extendShinyjs
+#' @importFrom shinyjs useShinyjs extendShinyjs js
 
 app_ui_navbar <- function(request) {
   shiny::navbarPage(
