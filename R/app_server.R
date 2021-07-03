@@ -50,28 +50,6 @@ app_server <- function(input, output, session) {
     DT::datatable(tbl_results())
   })
 
-  output$plot <- shiny::renderPlot({
-    # req(tbl_results())
-
-    log_msg(sprintf("Rendering plot with %s rows.", nrow(tbl_results())))
-    # xlims <- input$range_slider * 1e6
-    # ylims <- c(0, max(tbl_gwas$MaxLog10Pvalue[input$gwas_table_rows_selected]))
-
-    base_p <- ggplot2::ggplot() +
-      # scale_y_continuous(limits = ylims) +
-      ggplot2::scale_x_continuous("Chromosome location (Mb)")#, limits = xlims, labels = to_mb)
-
-    if (nrow(tbl_results()) == 0) {
-      base_p
-    } else {
-      base_p +
-        ggplot2::geom_point(
-          data = subset(tbl_results(), -log10(pval) >= 1),
-          ggplot2::aes(pos, -log10(pval)),
-          alpha = 0.5
-        ) +
-        ggplot2::facet_grid(. ~ phenotype)
-    }
-  })
+  manhattanPlotServer("gwas_plot", data = tbl_results)
 
 }

@@ -70,7 +70,7 @@ app_ui <- function() {
           tabPanel(
             title = "Plot",
             class = "p-3",
-            shiny::plotOutput("plot")
+            manhattanPlotUI("gwas_plot")
           )
         ),
 
