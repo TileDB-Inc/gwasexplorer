@@ -55,9 +55,11 @@ regionSelectorServer <- function(id) {
       req(input$contig_range[2] > chr_length())
       slider_range <- c(chr_length() - diff(input$contig_range), chr_length())
 
-      log_msg(glue::glue(
+      log_msg(sprintf(
         "Selected range extends beyond chr{input$contig}'s length\n",
-        "  - manually adjusting to [{slider_range[1]},{slider_range[2]}]"
+        "  - manually adjusting to [%i, %i]",
+        slider_range[1],
+        slider_range[2]
       ))
 
       shiny::updateSliderInput(
@@ -77,9 +79,11 @@ regionSelectorServer <- function(id) {
       slider_range[1] <- slider_range[2] - 1
       }
 
-      log_msg(glue::glue(
+      log_msg(sprintf(
         "Width of selected range is zero\n",
-        "  - manually adjusting to [{slider_range[1]},{slider_range[2]}]"
+        "  - manually adjusting to [%i,%i]",
+        slider_range[1],
+        slider_range[2]
       ))
 
       shiny::updateSliderInput(
