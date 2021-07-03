@@ -1,7 +1,7 @@
 #' GWAS Explorer UI
 #' @importFrom shinyjs useShinyjs extendShinyjs js
 
-app_ui_navbar <- function(request) {
+app_ui <- function() {
   shiny::navbarPage(
     title = "GWAS Explorer",
     windowTitle = "GWAS Explorer",

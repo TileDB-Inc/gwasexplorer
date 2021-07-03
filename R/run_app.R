@@ -11,7 +11,7 @@ run_app <- function(
   enableBookmarking = NULL) {
 
   shiny::shinyApp(
-    ui = app_ui_navbar,
+    ui = app_ui,
     server = app_server,
     onStart = onStart,
     options = options,
