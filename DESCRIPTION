@@ -25,3 +25,13 @@ Imports:
     ggplot2
 Depends:
     R (>= 2.10)
+Collate:
+    'app_ui.R'
+    'app_server.R'
+    'app_ui_snippets.R'
+    'mod_array_selector.R'
+    'mod_region_selector.R'
+    'run_app.R'
+    'theme.R'
+    'utils.R'
+    'zzz.R'
