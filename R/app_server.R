@@ -2,6 +2,7 @@
 #'
 #' @param input,output,session Internal parameters for {shiny}
 #' @import shiny
+#' @importFrom utils modifyList
 #' @noRd
 
 app_server <- function(input, output, session) {
@@ -27,7 +28,7 @@ app_server <- function(input, output, session) {
   query_params <- reactive({
     req(query_region)
     log_msg("Updating query with selected phenotype")
-    modifyList(
+    utils::modifyList(
       query_region(),
       list(phenotype = cbind(input$phenotype, input$phenotype))
     )
