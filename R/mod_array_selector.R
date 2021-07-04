@@ -25,7 +25,7 @@ arraySelectorUI <- function(id) {
         shiny::actionButton(
           inputId = ns("submit"),
           label = "Load Array",
-          class = "btn-primary"
+          class = "btn-primary mt-2"
         )
       )
     ),
