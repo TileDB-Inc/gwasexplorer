@@ -39,9 +39,22 @@ app_server <- function(input, output, session) {
     log_msg(
       sprintf("Querying array across %i dimensions", length(query_params()))
     )
-    query <- query_params()
+
+    # convert from -log10 scale
+    thresh <- 10^-input$threshold
     tdb <- tdb_array()
-    tiledb::selected_ranges(tdb) <- query
+    tiledb::selected_ranges(tdb) <- query_params()
+
+    # use query condition to filter by pvalue (not available in release version)
+    if (thresh < 1) {
+      tiledb::query_condition(tdb) <- tiledb::tiledb_query_condition_init(
+        attr = "pval",
+        value = thresh,
+        dtype = "FLOAT64",
+        op = "LE"
+      )
+    }
+
     tdb[]
   })
 

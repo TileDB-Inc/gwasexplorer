@@ -42,15 +42,30 @@ app_ui <- function() {
           tabPanel(
             title = "Query",
             class = "p-3",
-            shiny::div(
-              shiny::selectizeInput(
-                inputId = "phenotype",
-                label = "Phenotype",
-                choices = .tbl_phenotypes$description,
-                selected = .tbl_phenotypes$description[1]
+
+            shiny::fluidRow(
+              shiny::column(
+                width = 4,
+                shiny::selectizeInput(
+                  inputId = "phenotype",
+                  label = "Phenotype",
+                  choices = .tbl_phenotypes$description,
+                  selected = .tbl_phenotypes$description[1]
+                )
               ),
-              regionSelectorUI(id = "region")
-            )
+              shiny::column(
+                width = 8,
+                shiny::sliderInput(
+                  inputId = "threshold",
+                  label = "-log10 p-value Threshold",
+                  min = 0,
+                  max = 10,
+                  step = 1,
+                  value = 1
+                )
+              )
+            ),
+            regionSelectorUI(id = "region")
           )
         ),
 
