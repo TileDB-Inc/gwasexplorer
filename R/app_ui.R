@@ -91,6 +91,11 @@ app_ui <- function() {
             title = "Stats",
             class = "p-3",
             shiny::verbatimTextOutput("stats")
+          ),
+          tabPanel(
+            title = "Snippets",
+            class = "p-3",
+            querySnippetsUI("query_snippets")
           )
         ),
 

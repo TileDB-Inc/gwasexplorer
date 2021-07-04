@@ -19,12 +19,14 @@ app_server <- function(input, output, session) {
       js$enableTab("Results")
       js$enableTab("Plot")
       js$enableTab("Stats")
+      js$enableTab("Snippets")
     } else {
       log_msg("Disabling query/results tab")
       js$disableTab("Query")
       js$disableTab("Results")
       js$disableTab("Plot")
-      js$enableTab("Stats")
+      js$disableTab("Stats")
+      js$disableTab("Snippets")
       shiny::updateTabsetPanel(session, "main-tabs", selected = "About")
     }
   })
@@ -75,5 +77,5 @@ app_server <- function(input, output, session) {
   })
 
   manhattanPlotServer("gwas_plot", data = tbl_results)
-
+  querySnippetsServer("query_snippets", array = tdb_array, query = query_params)
 }
