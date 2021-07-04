@@ -45,7 +45,7 @@ regionSelectorServer <- function(id) {
       shiny::updateSliderInput(
         session,
         inputId = "contig_range",
-        min = 1L,
+        # min = 0L,
         max = chr_length()
       )
     })
