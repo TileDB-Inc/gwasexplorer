@@ -9,7 +9,7 @@ arraySelectorUI <- function(id) {
   shiny::tagList(
     shiny::fluidRow(
       shiny::column(
-        width = 11,
+        width = 10,
         # shiny::br(),
         shiny::textInput(
           inputId = ns("uri"),
@@ -20,12 +20,11 @@ arraySelectorUI <- function(id) {
         )
       ),
       shiny::column(
-        width = 1,
+        width = 2,
         shiny::br(),
         shiny::actionButton(
           inputId = ns("submit"),
-          label = "",
-          icon = icon("check"),
+          label = "Load Array",
           class = "btn-primary"
         )
       )
