@@ -86,6 +86,11 @@ app_ui <- function() {
             title = "Plot",
             class = "p-3",
             manhattanPlotUI("gwas_plot")
+          ),
+          tabPanel(
+            title = "Stats",
+            class = "p-3",
+            shiny::verbatimTextOutput("stats")
           )
         ),
 

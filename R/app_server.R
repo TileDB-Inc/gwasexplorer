@@ -6,6 +6,8 @@
 #' @noRd
 
 app_server <- function(input, output, session) {
+  tiledb::tiledb_stats_enable()
+  stat_file <- tempfile()
 
   tdb_array <- arraySelectorServer(id = "gwas_array")
   query_region <- regionSelectorServer(id = "region")
@@ -16,11 +18,13 @@ app_server <- function(input, output, session) {
       js$enableTab("Query")
       js$enableTab("Results")
       js$enableTab("Plot")
+      js$enableTab("Stats")
     } else {
       log_msg("Disabling query/results tab")
       js$disableTab("Query")
       js$disableTab("Results")
       js$disableTab("Plot")
+      js$enableTab("Stats")
       shiny::updateTabsetPanel(session, "main-tabs", selected = "About")
     }
   })
@@ -61,6 +65,13 @@ app_server <- function(input, output, session) {
   output$table <- DT::renderDT({
     req(tbl_results())
     DT::datatable(tbl_results())
+  })
+
+  output$stats <- shiny::renderText({
+    req(tbl_results())
+    tiledb::tiledb_stats_dump(stat_file)
+    tiledb::tiledb_stats_reset()
+    paste0(readLines(stat_file), collapse = "\n")
   })
 
   manhattanPlotServer("gwas_plot", data = tbl_results)

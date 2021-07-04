@@ -16,7 +16,7 @@ shinyjs.enableTab = function(name) {
 
 shinyjs.init = function() {
   console.log("Disabling query tab");
-  var tabs = ["Query", "Results", "Plot"];
+  var tabs = ["Query", "Results", "Plot", "Stats"];
   for (var i = 0; i < tabs.length; i++) {
     shinyjs.disableTab(tabs[i]);
   }
