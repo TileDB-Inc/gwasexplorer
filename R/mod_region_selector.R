@@ -34,10 +34,16 @@ regionSelectorUI <- function(id) {
 # param contigs: vector of named chromosome lengths
 regionSelectorServer <- function(id) {
   moduleServer(id, function(input, output, session) {
+
+    # limit size of range selection on memory-limited shinyapps deployment
+    max_range <- as.numeric(Sys.getenv("GWASEXPLORER_MAX_RANGE", unset = "250"))
+    print(max_range)
+
     chr_length <- reactive({
       log_msg(sprintf("Calculating Mb length for chr %s", input$contig))
       to_mb(unname(.supported_genomes$grch37[input$contig]))
     })
+
 
     observe({
       req(chr_length())
@@ -72,9 +78,10 @@ regionSelectorServer <- function(id) {
     # ensure width of selected range is not zero
     observe({
       req(diff(input$contig_range) == 0)
+
       slider_range <- input$contig_range
-      if (slider_range[1] == 1) {
-        slider_range <- c(1, 2)
+      if (slider_range[1] == 0) {
+        slider_range <- c(0, 1)
       } else {
       slider_range[1] <- slider_range[2] - 1
       }
@@ -82,6 +89,31 @@ regionSelectorServer <- function(id) {
       log_msg(sprintf(
         "Width of selected range is zero\n",
         "  - manually adjusting to [%i,%i]",
+        slider_range[1],
+        slider_range[2]
+      ))
+
+      shiny::updateSliderInput(
+        session,
+        inputId = "contig_range",
+        value = slider_range
+      )
+    })
+
+    # ensure width of selected range does not exceed max range
+    observe({
+      req(diff(input$contig_range) > max_range)
+      slider_range <- input$contig_range
+
+      # pull back upper range
+      slider_range[2] <- slider_range[1] + max_range
+
+      log_msg(sprintf(
+        paste(
+          "Width of selected range exceeds configured limited: %iMb\n",
+          "  - manually adjusting to [%i,%i]"
+        ),
+        max_range,
         slider_range[1],
         slider_range[2]
       ))
