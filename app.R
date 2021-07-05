@@ -16,4 +16,4 @@
 # )
 
 pkgload::load_all(export_all = FALSE, helpers = FALSE, attach_testthat = FALSE)
-gtexplorer::run_app()
+gwasexplorer::run_app()
