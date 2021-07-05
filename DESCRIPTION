@@ -1,7 +1,7 @@
 Package: gwasexplorer
 Title: TileDB GWAS Explorer
 Description: A shiny-based GUI for exploring GWAS results stored in TileDB.
-Version: 0.0.1.9000
+Version: 0.0.1.9001
 Authors@R:
     person(given = "Aaron",
            family = "Wolen",
@@ -26,6 +26,8 @@ Imports:
     glue
 Depends:
     R (>= 2.10)
+Remotes:
+    tiledb-inc/tiledb-r
 Collate:
     'app_ui.R'
     'app_server.R'
