@@ -2,6 +2,7 @@
 
 library(GenomeInfoDb)
 library(usethis)
+library(dplyr)
 library(purrr)
 library(stringr)
 library(googlesheets4)
@@ -47,16 +48,36 @@ colnames(manifest) <- colnames(manifest) %>%
   str_replace_all(" ", "_") %>%
   str_remove("phenotype_")
 
-manifest <- manifest %>%
-  subset(!is.na(code)) %>%
-  subset(str_detect(code, "^\\d")) %>%
-  subset(md5s != "<pending>") %>%
-  transform(code = unlist(code, use.names = FALSE))
+gwas_manifest <- manifest %>%
+  filter(!is.na(code)) %>%
+  filter(str_detect(code, "^\\d")) %>%
+  filter(md5s != "<pending>") %>%
+  mutate(code = unlist(code, use.names = FALSE)) %>%
+  filter(sex == "both_sexes") %>%
+  # keep one version of results per description
+  group_by(description) %>%
+  slice(1) %>%
+  ungroup()
 
-.tbl_phenotypes <- manifest %>%
-  subset(description %in% phenotypes) %>%
-  subset(sex == "both_sexes") %>%
+# randomly sample
+set.seed(123)
+gwas_manifest <- slice_sample(gwas_manifest, n = 500)
+
+.tbl_phenotypes <- gwas_manifest %>%
   subset(select = c("code", "description", "file"))
+
+# temporary table containing only phenotypes from useR tutorial
+tutorial_phenos <- c(
+  "Water intake",
+  "Milk chocolate intake",
+  "Duration of fitness test",
+  "Irritability",
+  "Ventricular rate",
+  "General happiness"
+)
+
+.tbl_tutorial_phenotypes <- .tbl_phenotypes %>%
+  filter(description %in% tutorial_phenos)
 
 
 # export ------------------------------------------------------------------
@@ -64,6 +85,7 @@ manifest <- manifest %>%
 usethis::use_data(
   .supported_genomes,
   .tbl_phenotypes,
+  .tbl_tutorial_phenotypes,
   internal = TRUE,
   overwrite = TRUE
 )
