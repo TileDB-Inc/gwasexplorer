@@ -1,8 +1,8 @@
 # gwas explorer
 
-Explore UKBiobank GWAS results stored in an S3 TileDB array. Launch the app [here](https://aaron.shinyapps.io/gwasexplorer/).
+Explore UKBiobank GWAS results stored in an S3 TileDB array.
 
-![Screenshot of gwas explorer](man/figures/gwas-explorer-screenshot.png)
+![Screenshot of gwas explorer](man/figures/gwasexplorer-screenshot.png)
 
 ## Installation
 
@@ -13,5 +13,5 @@ remotes::install_github("tiledb-inc/gwasexplorer", remotes::github_release())
 ```
 
 ## Citation
-
+UK Biobank GWAS Results: Neale Lab, <http://www.nealelab.is/uk-biobank/>, 2018.
 
