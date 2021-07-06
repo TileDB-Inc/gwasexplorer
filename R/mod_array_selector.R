@@ -14,7 +14,7 @@ arraySelectorUI <- function(id) {
         shiny::textInput(
           inputId = ns("uri"),
           label = "URI",
-          value = "/Users/aaronwolen/Dropbox (Personal)/work/tiledb/tiledb-ukbiobank-gwas/data/gwasdbv2",
+          value = "s3://genomic-datasets/gwas/ukbiobank-gwasdb",
           # placeholder = "TileDB URI",
           width = "100%"
         )
