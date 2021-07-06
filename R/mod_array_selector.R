@@ -2,6 +2,7 @@
 #'
 #' @param id ID for module
 #' @importFrom shinyjs useShinyjs
+#' @importFrom shinycssloaders withSpinner
 #' @noRd
 
 arraySelectorUI <- function(id) {
@@ -33,7 +34,12 @@ arraySelectorUI <- function(id) {
     shiny::fluidRow(
       shiny::column(
         width = 11,
-        verbatimTextOutput(ns("validation_message"))
+        shinycssloaders::withSpinner(
+          verbatimTextOutput(ns("validation_message")),
+          type = 1,
+          color = "#4d9fff",
+          proxy.height = "100px"
+        )
       )
     )
   )
