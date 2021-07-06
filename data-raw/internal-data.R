@@ -64,7 +64,8 @@ set.seed(123)
 gwas_manifest <- slice_sample(gwas_manifest, n = 500)
 
 .tbl_phenotypes <- gwas_manifest %>%
-  subset(select = c("code", "description", "file"))
+  arrange(description) %>%
+  select(c("code", "description", "file"))
 
 # temporary table containing only phenotypes from useR tutorial
 tutorial_phenos <- c(
