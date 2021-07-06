@@ -49,8 +49,8 @@ app_ui <- function() {
                 shiny::selectizeInput(
                   inputId = "phenotype",
                   label = "Phenotype",
-                  choices = .tbl_phenotypes$description,
-                  selected = .tbl_phenotypes$description[1]
+                  choices = "",
+                  selected = ""
                 )
               ),
               shiny::column(

@@ -20,6 +20,21 @@ app_server <- function(input, output, session) {
       js$enableTab("Plot")
       js$enableTab("Stats")
       js$enableTab("Snippets")
+
+      log_msg("Updating phenotype choices")
+      if (tdb_array()@uri == "s3://genomic-datasets/gwas/ukbiobank-gwasdb") {
+        phenos <- .tbl_phenotypes$description
+      } else {
+        # assume it's a local array created for the UseR tutorial
+        phenos <- .tbl_tutorial_phenotypes$description
+      }
+      shiny::updateSelectizeInput(
+        session,
+        inputId = "phenotype",
+        choices = c("", phenos),
+        selected = "",
+        server = TRUE
+      )
     } else {
       log_msg("Disabling query/results tab")
       js$disableTab("Query")
@@ -33,7 +48,9 @@ app_server <- function(input, output, session) {
 
   query_params <- reactive({
     req(query_region)
-    log_msg("Updating query with selected phenotype")
+    req(input$phenotype)
+
+    log_msg(sprintf("Updating query for phenotype: %s", input$phenotype))
     utils::modifyList(
       query_region(),
       list(phenotype = cbind(input$phenotype, input$phenotype))
