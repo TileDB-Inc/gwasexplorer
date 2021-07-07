@@ -39,7 +39,7 @@ regionSelectorServer <- function(id) {
   moduleServer(id, function(input, output, session) {
 
     # limit size of range selection on memory-limited shinyapps deployment
-    max_range <- as.numeric(Sys.getenv("GWASEXPLORER_MAX_RANGE", unset = "250"))
+    max_range <- ifelse(Sys.getenv("R_CONFIG_ACTIVE") == "shinyapps", 20L, 250L)
 
     chr_length <- reactive({
       log_msg(glue::glue("Calculating Mb length for chr {input$contig}"))
