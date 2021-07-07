@@ -15,16 +15,19 @@ regionSelectorUI <- function(id) {
 
     shiny::column(
       width = 10,
-      shiny::sliderInput(
-        inputId = ns("contig_range"),
-        label = "Select Range",
-        min = 0L,
-        max = 250L,
-        value = c(1L, 5L),
-        step = 1L,
-        dragRange = TRUE,
-        post = "Mb",
-        width = "100%"
+      shiny::div(
+        id = "region-selector",
+        shiny::sliderInput(
+          inputId = ns("contig_range"),
+          label = "Select Range",
+          min = 0L,
+          max = 250L,
+          value = c(1L, 5L),
+          step = 1L,
+          dragRange = TRUE,
+          post = "Mb",
+          width = "100%"
+        )
       )
     )
   )
