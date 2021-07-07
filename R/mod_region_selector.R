@@ -9,7 +9,7 @@ regionSelectorUI <- function(id) {
         inputId = ns("contig"),
         label = "Chromosome",
         choices = names(.supported_genomes$grch37),
-        selected = "chr1"
+        selected = "20"
       )
     ),
 
