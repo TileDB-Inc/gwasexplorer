@@ -40,10 +40,9 @@ regionSelectorServer <- function(id) {
 
     # limit size of range selection on memory-limited shinyapps deployment
     max_range <- as.numeric(Sys.getenv("GWASEXPLORER_MAX_RANGE", unset = "250"))
-    print(max_range)
 
     chr_length <- reactive({
-      log_msg(sprintf("Calculating Mb length for chr %s", input$contig))
+      log_msg(glue::glue("Calculating Mb length for chr {input$contig}"))
       to_mb(unname(.supported_genomes$grch37[input$contig]))
     })
 
@@ -64,11 +63,9 @@ regionSelectorServer <- function(id) {
       req(input$contig_range[2] > chr_length())
       slider_range <- c(chr_length() - diff(input$contig_range), chr_length())
 
-      log_msg(sprintf(
+      log_msg(glue::glue(
         "Selected range extends beyond chr{input$contig}'s length\n",
-        "  - manually adjusting to [%i, %i]",
-        slider_range[1],
-        slider_range[2]
+        "  - manually adjusting to [{slider_range[1]}, {slider_range[2]}]",
       ))
 
       shiny::updateSliderInput(
@@ -89,11 +86,9 @@ regionSelectorServer <- function(id) {
       slider_range[1] <- slider_range[2] - 1
       }
 
-      log_msg(sprintf(
+      log_msg(glue::glue(
         "Width of selected range is zero\n",
-        "  - manually adjusting to [%i,%i]",
-        slider_range[1],
-        slider_range[2]
+        "  - manually adjusting to [{slider_range[1]},{slider_range[2]}]"
       ))
 
       shiny::updateSliderInput(
@@ -111,14 +106,9 @@ regionSelectorServer <- function(id) {
       # pull back upper range
       slider_range[2] <- slider_range[1] + max_range
 
-      log_msg(sprintf(
-        paste(
-          "Width of selected range exceeds configured limited: %iMb\n",
-          "  - manually adjusting to [%i,%i]"
-        ),
-        max_range,
-        slider_range[1],
-        slider_range[2]
+      log_msg(glue::glue(
+        "Width of selected range exceeds configured limited: {max_range}Mb\n",
+        "  - manually adjusting to [{slider_range[1]},{slider_range[2]}]"
       ))
 
       shiny::updateSliderInput(
@@ -159,7 +149,7 @@ regionSelectorApp <- function() {
   server <- function(input, output, session) {
     selected_region <- regionSelectorServer("region")
     output$selection <- shiny::renderPrint({
-      message("Assembling selected region\n")
+      log_msg("Assembling selected region")
       selected_region()
     })
   }
