@@ -33,8 +33,8 @@ app_server <- function(input, output, session) {
       shiny::updateSelectizeInput(
         session,
         inputId = "phenotype",
-        choices = c("", phenos),
-        selected = "",
+        choices =  phenos,
+        selected = phenos[1],
         server = TRUE
       )
     } else {
