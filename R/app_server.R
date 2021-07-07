@@ -48,7 +48,7 @@ app_server <- function(input, output, session) {
     }
   })
 
-  query_params <- shiny::eventReactive(input$submit_query, {
+  query_params <- shiny::reactive({
     req(query_region)
     req(input$phenotype)
 
@@ -59,7 +59,17 @@ app_server <- function(input, output, session) {
     )
   })
 
-  tbl_results <- shiny::reactive({
+  shiny::observeEvent(input$submit_query, {
+    req(input$`main-tabs` == "About")
+    log_msg("Automatically switching to Results tab")
+    shiny::updateTabsetPanel(
+      session,
+      inputId = "main-tabs",
+      selected = "Results"
+    )
+  })
+
+  tbl_results <- shiny::eventReactive(input$submit_query, {
     shiny::req(tdb_array(), query_params())
     log_msg(
       sprintf("Querying array across %i dimensions", length(query_params()))
