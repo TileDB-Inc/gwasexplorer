@@ -22,7 +22,9 @@ app_server <- function(input, output, session) {
       js$enableTab("Snippets")
 
       log_msg("Updating phenotype choices")
-      if (tdb_array()@uri == "s3://genomic-datasets/gwas/ukbiobank-gwasdb") {
+      is_s3 <- grepl("^s3", tdb_array()@uri)
+      if (is_s3) {
+        # assume it's full array on
         phenos <- .tbl_phenotypes$description
       } else {
         # assume it's a local array created for the UseR tutorial
