@@ -45,23 +45,34 @@ app_ui <- function() {
 
             shiny::fluidRow(
               shiny::column(
-                width = 4,
+                width = 6,
                 shiny::selectizeInput(
                   inputId = "phenotype",
                   label = "Phenotype",
                   choices = "",
-                  selected = ""
+                  selected = "",
+                  width = "100%",
                 )
               ),
               shiny::column(
-                width = 8,
+                width = 5,
                 shiny::sliderInput(
                   inputId = "threshold",
                   label = "-log10 p-value Threshold",
                   min = 0,
                   max = 10,
                   step = 1,
-                  value = 1
+                  value = 1,
+                  width = "100%",
+                )
+              ),
+              shiny::column(
+                width = 1,
+                shiny::br(),
+                shiny::actionButton(
+                  inputId = "submit_query",
+                  label = "Submit Query",
+                  class = "btn-primary mt-2"
                 )
               )
             ),

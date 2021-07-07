@@ -48,7 +48,7 @@ app_server <- function(input, output, session) {
     }
   })
 
-  query_params <- reactive({
+  query_params <- shiny::eventReactive(input$submit_query, {
     req(query_region)
     req(input$phenotype)
 
